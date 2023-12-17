@@ -1,20 +1,26 @@
+import ErrorMessage from "./ErrorMessage";
+
 interface NumberOfBeingProps {
-  beingsNumber: string;
-  onChangeNumberOfBeings: (value: string) => void;
+  beingsNumber: number;
+  onChangeNumberOfBeings: (value: number) => void;
+  validate: (value: number) => string[];
 }
 
 const NumberOfBeings: React.FC<NumberOfBeingProps> = ({
   beingsNumber,
   onChangeNumberOfBeings,
+  validate,
 }) => {
+  const errorMessage = validate(beingsNumber);
   return (
     <>
       <label htmlFor="NumberOfBeings">Number of Beings</label>
       <input
-        type="text"
+        type="number"
         value={beingsNumber}
-        onChange={(e) => onChangeNumberOfBeings(e.target.value)}
+        onChange={(e) => onChangeNumberOfBeings(parseInt(e.target.value))}
       ></input>
+      <ErrorMessage message={errorMessage} />
     </>
   );
 };
