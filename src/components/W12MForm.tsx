@@ -17,7 +17,6 @@ const W12MForm = () => {
   const [numberofBeings, setNumberOfBeings] = useState(0);
   const [numberResult, setNumberResult] = useState("");
   const [reasonForSparing, setReasonForSparing] = useState("");
-  const [displayFormInput, setDisplayFormInput] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

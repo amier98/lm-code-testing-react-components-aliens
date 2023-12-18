@@ -46,3 +46,37 @@ test("when value is changed, onChange function is called", async () => {
   expect(handleChange).toBeCalled();
   expect(handleChange).toBeCalledTimes(30);
 });
+
+test("when there is no error, error array should be empty", () => {
+  const mockReasonForSparing = jest.fn();
+
+  mockReasonForSparing.mockReturnValue([]);
+
+  const reasonForLivingProps = {
+    reasonToSpare: "",
+    onChangeReasonToSpare: () => {},
+    validate: mockReasonForSparing,
+  };
+
+  render(<ReasonForSparing {...reasonForLivingProps} />);
+  const error = screen.queryByText("Characters must be between 17 and 153");
+  expect(error).not.toBeInTheDocument();
+});
+
+test("when there is error, error should be displayed", () => {
+  const mockReasonForSparing = jest.fn();
+
+  mockReasonForSparing.mockReturnValue([
+    "Characters must be between 17 and 153",
+  ]);
+
+  const reasonForLivingProps = {
+    reasonToSpare: "",
+    onChangeReasonToSpare: () => {},
+    validate: mockReasonForSparing,
+  };
+
+  render(<ReasonForSparing {...reasonForLivingProps} />);
+  const error = screen.queryByText("Characters must be between 17 and 153");
+  expect(error).toBeInTheDocument();
+});

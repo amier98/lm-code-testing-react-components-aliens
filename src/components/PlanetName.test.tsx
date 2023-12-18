@@ -40,3 +40,35 @@ test("when value changes, onChange function is called", async () => {
   expect(handleChange).toHaveBeenCalled();
   expect(handleChange).toHaveBeenCalledTimes(6);
 });
+
+test("when there is no error, error array should be empty", () => {
+  const mockReasonForSparing = jest.fn();
+
+  mockReasonForSparing.mockReturnValue([]);
+
+  const planetNameProps = {
+    planetName: "",
+    onChangePlanetName: () => {},
+    validate: mockReasonForSparing,
+  };
+
+  render(<PlanetName {...planetNameProps} />);
+  const error = screen.queryByText("Characters must be between 2 and 49");
+  expect(error).not.toBeInTheDocument();
+});
+
+test("when there is error, error should be displayed", () => {
+  const mockReasonForSparing = jest.fn();
+
+  mockReasonForSparing.mockReturnValue(["Characters must be between 2 and 49"]);
+
+  const planetNameProps = {
+    planetName: "",
+    onChangePlanetName: () => {},
+    validate: mockReasonForSparing,
+  };
+
+  render(<PlanetName {...planetNameProps} />);
+  const error = screen.queryByText("Characters must be between 2 and 49");
+  expect(error).toBeInTheDocument();
+});

@@ -42,3 +42,35 @@ test("when value is changed, onChange function is called", async () => {
   expect(handleChange).toBeCalled();
   expect(handleChange).toBeCalledTimes(8);
 });
+
+test("when there is no error, should be an empty array", () => {
+  const mockValidateSpeciesName = jest.fn();
+
+  mockValidateSpeciesName.mockReturnValue([]);
+
+  const speciesNameProps = {
+    speciesName: "",
+    validate: mockValidateSpeciesName,
+    onChangeSpeciesName: () => {},
+  };
+
+  render(<SpeciesName {...speciesNameProps} />);
+  const error = screen.queryByText("Input must be between 3 and 23");
+  expect(error).not.toBeInTheDocument();
+});
+
+test("when there is no error, should be an empty array", () => {
+  const mockValidateSpeciesName = jest.fn();
+
+  mockValidateSpeciesName.mockReturnValue(["Input must be between 3 and 23"]);
+
+  const speciesNameProps = {
+    speciesName: "",
+    validate: mockValidateSpeciesName,
+    onChangeSpeciesName: () => {},
+  };
+
+  render(<SpeciesName {...speciesNameProps} />);
+  const error = screen.queryByText("Input must be between 3 and 23");
+  expect(error).toBeInTheDocument();
+});
